@@ -4,7 +4,7 @@ import axios from "axios";
 const dotenv=require("dotenv");
 dotenv.config();
 
-const key = dotenv.key;
+const key = "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";
 const openAi_url='https://api.openai.com/v1/completions';
 const headers={'Content-Type': 'application/json',
   Authorization: `Bearer ${key}`};

@@ -20,12 +20,15 @@
         <ng-container *ngFor="let category of categoryTypes">
           <label
             (click)="toggleCategorySelection(category)"
+            [class.bg-pink-600]="isChecked(category)"
             class="text-slate-200 font-bold mr-2 mt-2 text-sm py-2 px-4 rounded-full border border-pink-600"
           >
+            <!--              [(ngModel)]="selectedCategories"-->
             <input
               type="checkbox"
-              [(ngModel)]="selectedCategories"
+
               name="categories"
+              [checked]="isChecked(category)"
               (change)="toggleCategorySelection(category)"
               [value]="category"
               class="hidden"

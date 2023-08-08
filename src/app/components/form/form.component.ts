@@ -36,16 +36,9 @@ export class FormComponent {
 
   toggleCategorySelection(category: string) {
 
-    let selectedCategories: string[] = this.selectedCategories;
-    console.log('selectedCategories ='+ selectedCategories+' '+ typeof selectedCategories)
-
-    // if (this.selectedCategories.includes(category)) {
-    //  this.selectedCategories.filter(selection=>selection!=category);
-    // } else {
-    //
-    //   this.selectedCategories.push(category);
-    //
-    // }
+    console.log('selectedCategories ='+ this.selectedCategories+' '+ typeof this.selectedCategories)
+    const index = this.selectedCategories.indexOf(category);
+    index !== -1 ? this.selectedCategories.splice(index, 1) : this.selectedCategories.push(category);
   }
 
 

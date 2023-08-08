@@ -7,7 +7,7 @@ import {Configuration, OpenAIApi} from "openai";
 export class OpenAiService {
   private openai: OpenAIApi;
   configuration = new Configuration({
-    apiKey: ,
+
   });
 
   constructor() {

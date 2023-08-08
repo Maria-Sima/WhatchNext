@@ -2,7 +2,7 @@ import axios from "axios";
 
 const dotenv=require("dotenv");
 dotenv.config()
-const key=process.env['TMDB_APIKEY'];
+
 
 export async function GetDetails({ title }: { title: string }) {
   try {

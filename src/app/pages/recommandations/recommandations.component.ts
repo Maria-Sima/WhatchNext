@@ -12,7 +12,7 @@ import {OpenAiService} from "../../service/open-ai-service";
 })
 export class RecommandationsComponent {
   cinemaType: string = 'tv show';
-  selectedCategories: string[] = [];
+  selectedCategories: string[]=[] ;
   specificDescriptors: string = '';
   loading: boolean = false;
   endStream: boolean = false;
@@ -31,21 +31,21 @@ export class RecommandationsComponent {
     this.error = '';
 
     let fullSearchCriteria = `Give me a list of 5 ${this.cinemaType} recommendations ${
-      this.selectedCategories.length > 0 ? `that fit all of the following categories: ${this.selectedCategories}` : ''
+      this.selectedCategories ? `that fit all of the following categories: ${this.selectedCategories}` : ''
     }. ${
-      this.specificDescriptors ? `Make sure it fits the following description as well: ${this.specificDescriptors}.` : ''
-    } ${
-      (this.selectedCategories.length > 0 || this.specificDescriptors)
-        ? `If you do not have 5 recommendations that fit these criteria perfectly, do your best to suggest other ${
-          this.cinemaType
-        }'s that I might like.`
+      this.specificDescriptors
+        ? `Make sure it fits the following description as well: ${this.specificDescriptors}.`
         : ''
-    } Please return this response as a numbered list with the ${this.cinemaType}'s title, followed by a colon. There should be a line of whitespace between each item in the list.`;
-
+    } ${
+      this.selectedCategories || this.specificDescriptors
+        ? `If you do not have 5 recommendations that fit these criteria perfectly, do your best to suggest other ${this.cinemaType}'s that I might like.`
+        : ''
+    } Please return this response as a numbered list with the ${this.cinemaType}'s title, followed by a colon, and then a brief description of the ${this.cinemaType}. There should be a line of whitespace between each item in the list.`;
     try {
       console.log(fullSearchCriteria)
       const response = await this.openaiService.getRecomandations(fullSearchCriteria);
-      console.log(response)
+      // const response = await lastValueFrom(data);
+
       if (response) {
         let lastLength = this.recommendations.length;
         let x = response.split('\n');
@@ -53,9 +53,10 @@ export class RecommandationsComponent {
           if ((x.length - 1 > i || this.endStream) && d !== '') {
             const match = d.match(/\d\.\s*(.*?):\s*(.*)/);
             if (match) {
-              const title = match[1]; // Extract the title from the match array
+              const title = match[1];
               const description = match[2];
               const recomandation:IRecomandation={title,description};
+
               return recomandation;
             } else {
               return { title: '', description: '' } as IRecomandation;
@@ -72,7 +73,7 @@ export class RecommandationsComponent {
     } catch (err) {
       this.error = 'Looks like OpenAI timed out :(';
     }
-
+    console.log(this.recommendations.length)
     this.loading = false;
   }
 

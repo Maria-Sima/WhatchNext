@@ -1,15 +1,15 @@
 <div class="pt-6 md:pt-10 text-slate-200">
   <div>
     <div class="mb-8">
-      <div class="mb-4 font-semi-bold text-lg-start">What kind of cinema are you searching for?</div>
+      <div class="mb-4 font-semibold text-lg">What kind of cinema are you searching for?</div>
       <div class="flex items-center">
         <ng-container *ngFor="let type of cinemaTypes">
           <button
-            (click)="cinemaType = type.value"
+            (click)="updateCinemaType(type.value)"
             [class.bg-pink-600]="cinemaType === type.value"
-          class="text-slate-200 font-bold mr-2 text-sm mt-2 py-2 px-4 rounded-full border border-pink-600"
+            class="text-slate-200 font-bold mr-2 text-sm mt-2 py-2 px-4 rounded-full border border-pink-600"
           >
-          {{ type.title }}
+            {{ type.title }}
           </button>
         </ng-container>
       </div>
@@ -19,17 +19,18 @@
       <div class="flex items-center flex-wrap">
         <ng-container *ngFor="let category of categoryTypes">
           <label
-            [class.bg-pink-600]="selectedCategories.includes(category)"
-          class="text-slate-200 font-bold mr-2 mt-2 text-sm py-2 px-4 rounded-full border border-pink-600"
+            (click)="toggleCategorySelection(category)"
+            class="text-slate-200 font-bold mr-2 mt-2 text-sm py-2 px-4 rounded-full border border-pink-600"
           >
-          <input
-            type="checkbox"
-            [(ngModel)]="selectedCategories"
-            name="categories"
-            [value]="category"
-            class="hidden"
-          />
-          {{ category }}
+            <input
+              type="checkbox"
+              [(ngModel)]="selectedCategories"
+              name="categories"
+              (change)="toggleCategorySelection(category)"
+              [value]="category"
+              class="hidden"
+            />
+            {{ category }}
           </label>
         </ng-container>
       </div>
@@ -42,20 +43,20 @@
         placeholder="Ex. Must have at least 2 seasons and be on Netflix or Hulu."
       ></textarea>
       <button
-        (click)="loading = !loading"
+        (click)="toggleLoading()"
         [class.bg-pink-400]="loading"
-      [class.bg-gradient-to-r]="!loading"
-      [class.from-pink-700]="!loading"
-      [class.via-pink-600]="!loading"
-      [class.to-pink-700]="!loading"
-      class="mt-4 w-full h-10 text-white font-bold p-3 rounded-full flex items-center justify-center"
+        [class.bg-gradient-to-r]="!loading"
+        [class.from-pink-700]="!loading"
+        [class.via-pink-600]="!loading"
+        [class.to-pink-700]="!loading"
+        class="mt-4 w-full h-10 text-white font-bold p-3 rounded-full flex items-center justify-center"
       >
-      <ng-container *ngIf="loading; else buttonText">
-        <app-loading></app-loading>
-      </ng-container>
-      <ng-template #buttonText>
-        <p>Curate My List</p>
-      </ng-template>
+        <ng-container *ngIf="loading; else buttonText">
+          <app-loading></app-loading>
+        </ng-container>
+        <ng-template #buttonText>
+          <p>Curate My List</p>
+        </ng-template>
       </button>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {categoryTypes, cinemaTypes} from '../../data/dataTypes';
 
 @Component({
@@ -8,36 +8,50 @@ import {categoryTypes, cinemaTypes} from '../../data/dataTypes';
   encapsulation: ViewEncapsulation.None
 })
 export class FormComponent {
-  cinemaType: string = '';
-  selectedCategories: string[] = [];
-  specificDescriptors: string = '';
-  loading: boolean = false;
+  @Input() cinemaType: string = '';
+  @Input() selectedCategories: string[]=[];
+  @Input() specificDescriptors: string = '';
+  @Input() loading: boolean = false;
+
+
+  @Output() searchRequested = new EventEmitter<void>();
+
+  performSearch() {
+    this.searchRequested.emit();
+  }
+
+
 
   categoryTypes = categoryTypes;
   cinemaTypes = cinemaTypes;
 
-  @Output() cinemaTypeChange = new EventEmitter<string>();
-  @Output() selectedCategoriesChange = new EventEmitter<string[]>();
-  @Output() specificDescriptorsChange = new EventEmitter<string>();
-  @Output() loadingChange = new EventEmitter<boolean>();
 
-  emitCinemaTypeChange() {
-    this.cinemaTypeChange.emit(this.cinemaType);
+  updateCinemaType(newValue: string) {
+    this.cinemaType = newValue;
   }
 
-  // Method to emit changes for selectedCategories
-  emitSelectedCategoriesChange() {
-    this.selectedCategoriesChange.emit(this.selectedCategories);
+  isChecked(category: string): boolean {
+    return this.selectedCategories.includes(category);
   }
 
-  // Method to emit changes for specificDescriptors
-  emitSpecificDescriptorsChange() {
-    this.specificDescriptorsChange.emit(this.specificDescriptors);
+  toggleCategorySelection(category: string) {
+
+    let selectedCategories: string[] = this.selectedCategories;
+    console.log('selectedCategories ='+ selectedCategories+' '+ typeof selectedCategories)
+
+    // if (this.selectedCategories.includes(category)) {
+    //  this.selectedCategories.filter(selection=>selection!=category);
+    // } else {
+    //
+    //   this.selectedCategories.push(category);
+    //
+    // }
   }
 
-  // Method to emit changes for loading
-  emitLoadingChange() {
-    this.loadingChange.emit(this.loading);
+
+  toggleLoading() {
+    this.loading = !this.loading;
+    this.performSearch();
   }
 
 

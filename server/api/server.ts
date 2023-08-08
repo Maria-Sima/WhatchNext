@@ -13,10 +13,11 @@ app.use(express.json());
 app.use(cors);
 
 
-app.get('/api/details', async (req:Request, res: Response) => {
+app.post('/api/details', async (req:any, res: Response) => {
+  console.log("gets here")
   try {
     console.log(req);
-    const details = await GetDetails({ request: req });
+    const details = await GetDetails(req);
     res.json(details);
   } catch (error) {
     console.error('Error while fetching details:', error);
@@ -25,6 +26,7 @@ app.get('/api/details', async (req:Request, res: Response) => {
 });
 
 app.post('/api/recommendations', async (req:Request, res:Response) => {
+  console.log(req)
   try {
     const recommendations = await GetRecomandation({ request: req });
     res.json(recommendations);

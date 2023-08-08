@@ -1,55 +1,46 @@
-<!--<div>-->
-<!--  <div class="h-screen w-full bg-cover fixed" [style.backgroundImage]="'url(/background.png)'">-->
-<!--    <div [ngClass]="{'backdrop-blur-md'}" class="flex flex-col items-center justify-center min-h-screen w-full h-full bg-gradient-to-br from-slate-900/80 to-black/90"></div>-->
-<!--  </div>-->
+<div class="h-screen w-full bg-cover fixed" [style.backgroundImage]="'url(https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80)'">
+  <div [ngClass]="{'backdrop-blur-md': true}" class="flex flex-col items-center justify-center min-h-screen w-full h-full bg-gradient-to-br from-slate-900/80 to-black/90"></div>
+</div>
 
-<!--  <div class="absolute inset-0 px-6 flex flex-col h-screen overflow-auto">-->
-
-
-<!--    <ng-template #recommendationForm>-->
-<!--      <div class="w-full max-w-4xl mx-auto">-->
-<!--        <div class="w-full mb-8">-->
-<!--          <app-form-->
-<!--            [(cinemaType)]="cinemaType"-->
-<!--            [(selectedCategories)]="selectedCategories"-->
-<!--            [(loading)]="loading"-->
-<!--            [(specificDescriptors)]="specificDescriptors"-->
-<!--            (click)="search()"-->
-<!--          ></app-form>-->
-<!--          <button-->
-<!--            *ngIf="recommendations.length > 0 && endStream"-->
-<!--            (click)="clearForm()"-->
-<!--            class="bg-white/20 hover:bg-white/30 mt-4 w-full h-10 text-white font-bold p-3 rounded-full flex items-center justify-center"-->
-<!--          >-->
-<!--            Clear Search-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <div class="md:pb-20 max-w-4xl mx-auto w-full">-->
-<!--          <div *ngIf="loading && !searchResponse && !recommendations" class="font-semibold text-lg text-center mt-8 mb-4">-->
-<!--            Please be patient as I think. Good things are coming 😎.-->
-<!--          </div>-->
-<!--          <div *ngIf="error" class="font-semibold text-lg text-center mt-8 text-red-500">-->
-<!--            Woops! {{ error }}-->
-<!--          </div>-->
-<!--          <div *ngIf="recommendations">-->
-<!--            <ng-container *ngFor="let recommendation of recommendations; let i = index">-->
-<!--              <div *ngIf="recommendation !== ''" class="mb-8">-->
-<!--                <div *ngIf="recommendation; else loadingCard">-->
-<!--                  <app-recommendation-card [recommendation]="recommendation"></app-recommendation-card>-->
-<!--                </div>-->
-<!--                <ng-template #loadingCard>-->
-<!--                  <div>-->
-<!--                    <app-loading-card [incomingStream]="recommendation"></app-loading-card>-->
-<!--                  </div>-->
-<!--                </ng-template>-->
-<!--              </div>-->
-<!--            </ng-container>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </ng-template>-->
-
-<!--    <app-footer></app-footer>-->
-<!--  </div>-->
-<!--</div>-->
-
+<div class="absolute inset-0 px-6 flex flex-col h-screen overflow-auto mt-12">
+  <div class="w-full max-w-4xl mx-auto">
+    <div class="w-full mb-8">
+      <app-form
+        [cinemaType]="cinemaType"
+        [selectedCategories]="selectedCategories"
+        [loading]="loading"
+        [specificDescriptors]="specificDescriptors"
+        (searchRequested)="search()"
+      ></app-form>
+      <button *ngIf="recommendations.length > 0 "
+        (click)="clearForm()"
+        class="bg-white/20 hover:bg-white/30 mt-4 w-full h-10 text-white font-bold p-3 rounded-full flex items-center justify-center"
+      >
+        Clear Search
+      </button>
+    </div>
+    <div class="md:pb-20 max-w-4xl mx-auto w-full">
+      <div *ngIf="loading && !searchResponse && !recommendations" class="font-semibold text-lg text-center mt-8 mb-4">
+        Please be patient
+      </div>
+      <div *ngIf="error" class="font-semibold text-lg text-center mt-8 text-red-500">
+        Woops! {{ error }}
+      </div>
+      <div *ngIf="recommendations">
+        <ng-container *ngFor="let recommendation of recommendations; let i = index">
+          <div class="mb-8">
+            <div *ngIf="recommendation; else loadingCard" class="mb-8">
+              <app-recommandation-card [recommendation]="recommendation"></app-recommandation-card>
+            </div>
+            <ng-template #loadingCard>
+              <div>
+<!--                <app-loading-card [incomingStream]="recommendation"></app-loading-card>-->
+              </div>
+            </ng-template>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>

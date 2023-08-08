@@ -1,1 +1,54 @@
-<p>recommandation-card works!</p>
+<div>
+  <div *ngIf="data; else loadingCard" class="relative flex flex-col md:flex-row bg-neutral-800/70 shadow-md p-6">
+    <div class="hidden md:block h-[250px] flex-none w-1/5 bg-cover bg-center" [style.background-image]="'url(' + data.Poster + ')'" ></div>
+    <div class="md:hidden z-10 absolute inset-0 bg-cover bg-center" [style.backgroundImage]="'url(' + data.Poster + ')'" >
+      <div class="w-full h-full bg-black/80 bg-blur-sm"></div>
+    </div>
+    <div class="z-40 flex flex-col justify-between md:ml-6 pt-32 md:pt-0">
+      <div>
+        <div class="flex items-end mb-4">
+          <div class="font-bold text-slate-200 text-3xl">
+            {{ data.Title }}
+            <span class="font-bold text-slate-200/60 text-xl ml-2">{{ data.Year }}</span>
+          </div>
+        </div>
+        <div class="text-slate-200/90 mb-4">
+          {{ data.Plot }}
+        </div>
+        <div class="text-slate-200/50 mb-4">
+          Starring: {{ data.Actors }}
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="mr-4 py-1 px-2 rounded-full text-pink-600 border border-pink-600 text-xs">
+          {{ data.Rated }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loadingCard>
+    <!-- Render a loading card when data is not available yet -->
+    <div class="relative flex flex-col md:flex-row bg-neutral-800/70 shadow-md p-6">
+      <div class="text-white/50 flex items-center justify-center h-[250px] flex-none w-1/5 bg-neutral-900">
+        <!-- Add your loading icon or image here -->
+      </div>
+      <div class="md:hidden z-10 absolute inset-0 bg-cover bg-center">
+        <div class="w-full h-full bg-black/80 bg-blur-sm"></div>
+      </div>
+      <div class="z-40 flex flex-col justify-between md:ml-6">
+        <div>
+          <div class="flex items-end mb-4">
+            <div class="font-bold text-slate-200 text-3xl">
+              {{ recommendation.title }}
+              <span class="font-bold text-slate-200/60 text-xl ml-2">N/A</span>
+            </div>
+          </div>
+          <div class="text-slate-200/90 mb-4">
+            {{ recommendation.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+

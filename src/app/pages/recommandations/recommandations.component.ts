@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {IRecomandation} from "../../data/IRecomandation";
+import { animateScroll as scroll } from 'react-scroll';
+import {firstValueFrom, lastValueFrom} from "rxjs";
+import {OpenAiService} from "../../service/open-ai-service";
 
 @Component({
   selector: 'app-recommandations',
@@ -13,16 +17,18 @@ export class RecommandationsComponent {
   loading: boolean = false;
   endStream: boolean = false;
   searchResponse: string = '';
-  error:string='';
-  recommendations: Array<string > = [];
-  constructor(private http: HttpClient) { }
+  error: string = '';
+  recommendations: Array<IRecomandation> = [];
+
+  constructor(private http: HttpClient,private openaiService: OpenAiService) { }
+
   async search() {
     if (this.loading) return;
     this.recommendations = [];
     this.searchResponse = '';
     this.endStream = false;
     this.loading = true;
-    this.error='';
+    this.error = '';
 
     let fullSearchCriteria = `Give me a list of 5 ${this.cinemaType} recommendations ${
       this.selectedCategories.length > 0 ? `that fit all of the following categories: ${this.selectedCategories}` : ''
@@ -36,59 +42,39 @@ export class RecommandationsComponent {
         : ''
     } Please return this response as a numbered list with the ${this.cinemaType}'s title, followed by a colon. There should be a line of whitespace between each item in the list.`;
 
-      const response = await this.http.post('/api/getRecommendation', { searched: fullSearchCriteria }).subscribe({
-        next:response=>{
-          console.log(response)
-          this.loading=false;
-        },
-        error:err => {
-          console.error("Errors are the path to the dark side. OpenAi wants you to join ")
-        this.error=err
-        },
-        complete:()=>
-      console.log("Did it work? Yes?")
-      })
+    try {
+      console.log(fullSearchCriteria)
+      const response = await this.openaiService.getRecomandations(fullSearchCriteria);
+      console.log(response)
+      if (response) {
+        let lastLength = this.recommendations.length;
+        let x = response.split('\n');
+        this.recommendations = x.map((d, i) => {
+          if ((x.length - 1 > i || this.endStream) && d !== '') {
+            const match = d.match(/\d\.\s*(.*?):\s*(.*)/);
+            if (match) {
+              const title = match[1]; // Extract the title from the match array
+              const description = match[2];
+              const recomandation:IRecomandation={title,description};
+              return recomandation;
+            } else {
+              return { title: '', description: '' } as IRecomandation;
+            }
+          } else {
+            return { title: d, description: '' } as IRecomandation;
+          }
+        });
 
+        if (this.recommendations.length > lastLength) {
+          scroll.scrollToBottom({ duration: 1500 });
+        }
+      }
+    } catch (err) {
+      this.error = 'Looks like OpenAI timed out :(';
+    }
+
+    this.loading = false;
   }
-
-  // async handleSearchResponse(data: ReadableStreamDefaultReader<Uint8Array>) {
-  //   const reader = data.getReader();
-  //   const decoder = new TextDecoder();
-  //   let searchResponse = '';
-  //
-  //   try {
-  //     while (true) {
-  //       const { value, done } = await reader.read();
-  //       const chunkValue = decoder.decode(value);
-  //
-  //       searchResponse += chunkValue;
-  //
-  //       if (done) {
-  //         this.endStream = true;
-  //         break;
-  //       }
-  //     }
-  //
-  //     if (searchResponse) {
-  //       let lastLength = this.recommendations.length;
-  //       let x = searchResponse.split('\n');
-  //       this.recommendations = x.map((d, i) => {
-  //         if ((x.length - 1 > i || this.endStream) && d !== '') {
-  //           const [ title] = d.match(/\d\.\s*(.*?):\s*(.*)/);
-  //           return { title };
-  //         } else {
-  //           return d;
-  //         }
-  //       });
-  //
-  //       if (this.recommendations.length > lastLength) {
-  //         animateScroll.scrollToBottom({ duration: 1500 });
-  //       }
-  //     }
-  //   } catch (err) {
-  //     this.error = 'Looks like OpenAI timed out :(';
-  //   }
-  // }
 
   clearForm() {
     this.recommendations = [];
@@ -98,5 +84,4 @@ export class RecommandationsComponent {
     this.selectedCategories = [];
     this.specificDescriptors = '';
   }
-
 }

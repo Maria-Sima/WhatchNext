@@ -2,13 +2,15 @@ import {Injectable} from "@angular/core";
 import {Configuration, OpenAIApi} from "openai";
 import {environment} from "../../../environments/environment";
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class OpenAiService {
   configuration = new Configuration({
-    apiKey: environment.openAiKey
+    apiKey: "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"
   });
+
   private openai: OpenAIApi;
 
   constructor() {
@@ -16,6 +18,7 @@ export class OpenAiService {
   }
 
   async getRecomandations(prompt: string): Promise<string | undefined> {
+    console.log(environment.openAiKey)
     return this.openai.createCompletion({
       model: "text-davinci-003", prompt: prompt, max_tokens: 256, temperature: 0.7
     }).then(response => {

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
-import {categoryTypes, cinemaTypes} from '../../data/dataTypes';
+import {categoryTypes, cinemaTypes} from '../../api/data/dataTypes';
 
 @Component({
   selector: 'app-form',

@@ -1,4 +1,4 @@
-export interface IRecomandation{
+export interface Recomandation {
   title:string,
   description:string,
 }

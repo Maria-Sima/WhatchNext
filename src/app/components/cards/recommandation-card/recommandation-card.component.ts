@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IRecomandation} from "../../../data/IRecomandation";
-import {HttpClient} from "@angular/common/http";
+import {Recomandation} from "../../../api/data/recomandation";
+import {MovieDBService} from "../../../api/movieDb/movie-db.service";
+import {originalImageURL} from "../../../api/movieDb/movieDbConfig";
 
 @Component({
   selector: 'app-recommandation-card',
@@ -10,27 +11,28 @@ import {HttpClient} from "@angular/common/http";
 export class RecommandationCardComponent implements OnInit{
 
 
-  @Input() recommendation!: IRecomandation;
+  @Input() recommendation!: Recomandation;
 
 
   data: any;
   error: any;
-  constructor(private http: HttpClient) {}
+  constructor(private movieApiService: MovieDBService) {}
   ngOnInit() {
     this.getRecommendationInfo();
   }
 
   async getRecommendationInfo() {
-    try {
-      console.log(this.recommendation.title+' '+typeof this.recommendation)
-      const url = 'http://localhost:3000/api/getMediaDetails';
-      const response = await this.http.post(url, { title: this.recommendation?.title }).subscribe(
-        next: this.data=
-      )
-      this.data = await response.json();
-      console.log(this.data)
-    } catch (error) {
-      this.error = error;
+this.movieApiService.getDetails(this.recommendation.title).subscribe({
+    next: (details) => {
+      this.data = details.results[0];
+      console.log(this.data);
+    },
+    error: (err) => {
+      console.error(err);
     }
   }
+  )
+}
+
+  protected readonly originalImageURL = originalImageURL;
 }

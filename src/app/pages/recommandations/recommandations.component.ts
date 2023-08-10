@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {IRecomandation} from "../../data/IRecomandation";
+import {Recomandation} from "../../api/data/recomandation";
 import { animateScroll as scroll } from 'react-scroll';
 import {firstValueFrom, lastValueFrom} from "rxjs";
-import {OpenAiService} from "../../service/open-ai-service";
+import {OpenAiService} from "../../api/openai/open-ai-service";
 
 @Component({
   selector: 'app-recommandations',
@@ -18,7 +18,7 @@ export class RecommandationsComponent {
   endStream: boolean = false;
   searchResponse: string = '';
   error: string = '';
-  recommendations: Array<IRecomandation> = [];
+  recommendations: Array<Recomandation> = [];
 
   constructor(private http: HttpClient,private openaiService: OpenAiService) { }
 
@@ -50,19 +50,19 @@ export class RecommandationsComponent {
         let lastLength = this.recommendations.length;
         let x = response.split('\n');
         this.recommendations = x.map((d, i) => {
-          if ((x.length - 1 > i || this.endStream) && d !== '') {
+          if ((x.length - 1 >= i || this.endStream) && d !== '') {
             const match = d.match(/\d\.\s*(.*?):\s*(.*)/);
             if (match) {
               const title = match[1];
               const description = match[2];
-              const recomandation:IRecomandation={title,description};
+              const recomandation:Recomandation={title,description};
 
               return recomandation;
             } else {
-              return { title: '', description: '' } as IRecomandation;
+              return { title: '', description: '' } as Recomandation;
             }
           } else {
-            return { title: d, description: '' } as IRecomandation;
+            return { title: d, description: '' } as Recomandation;
           }
         });
 

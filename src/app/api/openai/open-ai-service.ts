@@ -8,7 +8,7 @@ import {environment} from "../../../environments/environment";
 })
 export class OpenAiService {
   configuration = new Configuration({
-    apiKey: "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"
+    apiKey: environment.openAiKey
   });
 
   private openai: OpenAIApi;
@@ -24,7 +24,7 @@ export class OpenAiService {
     }).then(response => {
       return response.data.choices[0].text;
     }).catch(error => {
-      return '';
+      return error;
     });
   }
 }

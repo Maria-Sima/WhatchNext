@@ -29,16 +29,17 @@
       <div *ngIf="recommendations">
         <ng-container *ngFor="let recommendation of recommendations; let i = index">
           <div class="mb-8">
-            <div *ngIf="recommendation !== undefined; else loadingCard" class="mb-8">
+            <ng-container *ngIf="recommendation !== undefined; else loadingCard">
               <app-recommandation-card [recommendation]="recommendation"></app-recommandation-card>
-            </div>
+            </ng-container>
             <ng-template #loadingCard>
               <div>
-<!--                <app-loading-card [incomingStream]="recommendation"></app-loading-card>-->
+                <app-loading-card [incomingStream]="recommendation"></app-loading-card>
               </div>
             </ng-template>
           </div>
         </ng-container>
+
       </div>
     </div>
   </div>

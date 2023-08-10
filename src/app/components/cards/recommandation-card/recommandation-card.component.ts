@@ -25,7 +25,7 @@ export class RecommandationCardComponent implements OnInit{
 this.movieApiService.getDetails(this.recommendation.title).subscribe({
     next: (details) => {
       this.data = details.results[0];
-      console.log(this.data);
+
     },
     error: (err) => {
       console.error(err);

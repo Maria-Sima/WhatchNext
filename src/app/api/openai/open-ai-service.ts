@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Configuration, OpenAIApi} from "openai";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../environment/environment";
+
 
 
 @Injectable({
@@ -18,7 +19,7 @@ export class OpenAiService {
   }
 
   async getRecomandations(prompt: string): Promise<string | undefined> {
-    console.log(environment.openAiKey)
+
     return this.openai.createCompletion({
       model: "text-davinci-003", prompt: prompt, max_tokens: 256, temperature: 0.7
     }).then(response => {

@@ -9,7 +9,7 @@
         [cinemaType]="cinemaType"
         [loading]="loading"
         [selectedCategories]="selectedCategories"
-        [specificDescriptors]="specificDescriptors"
+        [(specificDescriptors)]="specificDescriptors"
         (searchRequested)="search()"
       ></app-form>
       <button *ngIf="recommendations.length > 0 "
@@ -29,18 +29,18 @@
       <div *ngIf="recommendations">
         <ng-container *ngFor="let recommendation of recommendations; let i = index">
           <div class="mb-8">
-            <ng-container *ngIf="recommendation !== undefined; else loadingCard">
+            <ng-container *ngIf="hasFinishedLoading(recommendation) else loadingCard">
               <app-recommandation-card [recommendation]="recommendation"></app-recommandation-card>
             </ng-container>
             <ng-template #loadingCard>
-              <div>
+              <div *ngIf="!hasFinishedLoading(recommendation)">
                 <app-loading-card [incomingStream]="recommendation"></app-loading-card>
               </div>
             </ng-template>
           </div>
         </ng-container>
-
       </div>
+
     </div>
   </div>
   <app-footer></app-footer>

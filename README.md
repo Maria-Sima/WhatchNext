@@ -1,27 +1,24 @@
-# WhatchNext
+# WhatchNext - Angular Movie and TV Show Recommendation App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+Welcome to the **WhatchNext** repository! This project was developed in just 2 weeks (1 sprint) with the primary purpose of learning and getting accustomed to Angular and TypeScript. The app provides personalized movie and TV show recommendations using the OpenAI API and enriches them with details from the TMDB API.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Input-based Recommendations:** Utilizing OpenAI's API, you can enter your preferences, and the app will generate tailored movie and TV show suggestions based on your input.
 
-## Code scaffolding
+- **TMDB Integration:** The app fetches detailed information about the recommended movies and TV shows using the TMDB API. You can learn more about the cast, crew, plot, ratings, and more.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Responsive Design:** The app is built using Angular 12 and follows responsive design principles, ensuring an optimal viewing experience on both desktop and mobile devices.
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone the repository to your local machine.
 
-## Running unit tests
+2. Install the necessary dependencies using `npm install`.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3. Obtain API keys from OpenAI and TMDB.
+4. Create a directory enviroments, add `src/environments/environment.ts` and add your API keys.
+5. Start the Angular development server using `npm start`.
+6. Access the **WhatchNext** application by visiting `https://localhost:4200` in your web browser.
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![WhatchNext Screenshot]()

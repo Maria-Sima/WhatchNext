@@ -13,6 +13,7 @@ import { LoadingCardComponent } from './components/cards/loading-card/loading-ca
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {RecommandationsComponent} from "./pages/recommandations/recommandations.component";
+import {AppRoutingModule} from "./app.routing.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import {RecommandationsComponent} from "./pages/recommandations/recommandations.
     RouterOutlet,
     HttpClientModule,
     FormsModule,
+    BrowserModule,
+    AppRoutingModule,
     // CoreModule,
     // HomeModule,
     // NgxSpinnerModule

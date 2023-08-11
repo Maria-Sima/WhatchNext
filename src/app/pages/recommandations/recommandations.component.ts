@@ -33,7 +33,7 @@ export class RecommandationsComponent {
     this.searchResponse = '';
     this.loading = true;
     this.error = '';
-    console.log('Here   '+this.specificDescriptors)
+
     let fullSearchCriteria = `Give me a list of 5 ${this.cinemaType} recommendations ${
       this.selectedCategories ? `that fit all of the following categories: ${this.selectedCategories}` : ''
     }. ${
@@ -46,7 +46,6 @@ export class RecommandationsComponent {
         : ''
     } Please return this response as a numbered list with the ${this.cinemaType}'s title, followed by a colon, and then a brief description of the ${this.cinemaType}. There should be a line of whitespace between each item in the list.`;
     try {
-      console.log(fullSearchCriteria);
       const response = await this.openaiService.getRecomandations(fullSearchCriteria);
 
       if (response) {

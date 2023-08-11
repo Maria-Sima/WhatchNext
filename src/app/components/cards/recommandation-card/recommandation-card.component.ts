@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Recomandation} from "../../../api/data/recomandation";
 import {MovieDBService} from "../../../api/movieDb/movie-db.service";
-import {originalImageURL} from "../../../api/movieDb/movieDbConfig";
+import {originalImageURL, w500ImageURL} from "../../../api/movieDb/movieDbConfig";
+import {data} from "autoprefixer";
 
 @Component({
   selector: 'app-recommandation-card',
@@ -22,10 +23,11 @@ export class RecommandationCardComponent implements OnInit{
   }
 
   async getRecommendationInfo() {
+
 this.movieApiService.getDetails(this.recommendation.title).subscribe({
     next: (details) => {
       this.data = details.results[0];
-
+      console.log(this.data)
     },
     error: (err) => {
       console.error(err);
@@ -35,4 +37,5 @@ this.movieApiService.getDetails(this.recommendation.title).subscribe({
 }
 
   protected readonly originalImageURL = originalImageURL;
+  protected readonly w500ImageURL = w500ImageURL;
 }

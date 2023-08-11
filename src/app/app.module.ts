@@ -7,7 +7,6 @@ import {RouterOutlet} from "@angular/router";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormComponent } from './components/form/form.component';
 import { LoadingComponent } from './components/loading/loading.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { RecommandationCardComponent } from './components/cards/recommandation-card/recommandation-card.component';
 import { LoadingCardComponent } from './components/cards/loading-card/loading-card.component';
@@ -21,7 +20,6 @@ import {RecommandationsComponent} from "./pages/recommandations/recommandations.
     NavbarComponent,
     FormComponent,
     LoadingComponent,
-    FooterComponent,
     HomeComponent,
     RecommandationCardComponent,
     LoadingCardComponent,

@@ -21,4 +21,4 @@ Welcome to the **WhatchNext** repository! This project was developed in just 2 w
 5. Start the Angular development server using `npm start`.
 6. Access the **WhatchNext** application by visiting `https://localhost:4200` in your web browser.
 
-![WhatchNext Screenshot]()
+![WhatchNext Screenshot](https://i.imgur.com/b6AHfMr.png)
